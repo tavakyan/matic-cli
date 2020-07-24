@@ -6,6 +6,7 @@ import bor from './bor'
 import localnet from './localnet'
 import ganache from './ganache'
 import devnet from './devnet'
+import multinode from './multinode'
 
 //
 // Add sub commands
@@ -28,4 +29,7 @@ localnetCmd.action(localnet)
 const devnetCmd = new Command('devnet')
 devnetCmd.action(devnet)
 
-export default [heimdallCmd, genesisCmd, borCmd, ganacheCmd, localnetCmd, devnetCmd]
+const multinodeCmd = new Command('multinode')
+multinodeCmd.action(multinode)
+
+export default [heimdallCmd, genesisCmd, borCmd, ganacheCmd, localnetCmd, devnetCmd, multinodeCmd]

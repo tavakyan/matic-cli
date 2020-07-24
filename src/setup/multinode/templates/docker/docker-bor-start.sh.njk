@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+
+set -x #echo on
+
+NODE_DIR=/root/.bor
+DATA_DIR=/root/.bor/data
+
+ADDRESSES=({% for s in obj.signerDumpData %}
+  "{{ s.address }}"{% endfor %}
+)
+
+INDEX=$1;
+ADDRESS=${ADDRESSES[$INDEX]};
+
+NODE_DIR=/root/.bor
+DATA_DIR=/root/.bor/data
+
+docker-compose run -d --name bor$INDEX bor$INDEX sh -c "
+touch /root/logs/bor.log
+bor --datadir $DATA_DIR \
+  --port 30303 \
+  --heimdall http://heimdall$INDEX:1317 \
+  --rpc --rpcaddr '0.0.0.0' \
+  --ws --wsport 8546 \
+  --rpcvhosts '*' \
+  --rpccorsdomain '*' \
+  --rpcport 8545 \
+  --ipcpath $DATA_DIR/bor.ipc \
+  --rpcapi 'personal,db,eth,net,web3,txpool,miner,admin,bor' \
+  --syncmode 'full' \
+  --networkid '{{ obj.config.borChainId }}' \
+  --miner.gaslimit '2000000000' \
+  --txpool.nolocals \
+  --txpool.accountslots '128' \
+  --txpool.globalslots '20000' \
+  --txpool.lifetime '0h16m0s' \
+  --unlock $ADDRESS \
+  --keystore $NODE_DIR/keystore \
+  --password $NODE_DIR/password.txt \
+  --allow-insecure-unlock \
+  --mine > /root/logs/bor.log 2>&1 &
+tail -f /root/logs/bor.log
+"
+
