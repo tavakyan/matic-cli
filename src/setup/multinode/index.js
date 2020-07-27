@@ -308,8 +308,7 @@ export class Multinode {
         ...createTestnetTasks,
           {
             title: 'Process ganache templates',
-            task: async () => {
-              console.log("obj", this)     
+            task: async () => {                 
               const templateDir = path.resolve(
                 new URL(import.meta.url).pathname,
                 '../../ganache/templates'

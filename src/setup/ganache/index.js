@@ -63,12 +63,12 @@ export class Ganache {
           return fs.remove(this.dbDir)
         }
       },
-      {
-        title: 'Create dbdir',
-        task : () => {
-          return fs.mkdirp(this.dbDir)
-        }
-      },
+      // {
+      //   title: 'Create dbdir',
+      //   task : () => {
+      //     return fs.mkdirp(this.dbDir)
+      //   }
+      // },
       {
         title: 'Start ganache',
         task: () => {
