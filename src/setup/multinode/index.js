@@ -307,6 +307,21 @@ export class Multinode {
         },
         ...createTestnetTasks,
         {
+          title: 'Process ganache templates',
+          task: async () => {
+            const templateDir = path.resolve(
+              new URL(import.meta.url).pathname,
+              '../templates'
+            );
+            console.log("venkyyy template dir", templateDir)
+            // copy all templates to target directory
+            await fs.copy(templateDir, this.config.targetDirectory)
+
+            // process all njk templates
+            await processTemplateFiles(this.config.targetDirectory, { obj: this })
+          }
+        },
+        {
           title: genesis.taskTitle,
           task: () => {
             // set validator addresses
@@ -389,10 +404,10 @@ export class Multinode {
   }
 }
 
-async function setupMultinode(config) {
+async function setupMultinode(config) {  
   const multinode = new Multinode(config)
 
-  const tasks = await multinode.getTasks()
+  const tasks = await multinode.getTasks()  
   await tasks.run()
   console.log('%s Multinode is ready', chalk.green.bold('DONE'))
 }
@@ -422,7 +437,7 @@ export async function getHosts(n) {
   })
 }
 
-export default async function () {
+export default async function () {  
   await printDependencyInstructions()
 
   // configuration
@@ -499,5 +514,4 @@ export default async function () {
 
   // save config
   await saveConfig(config, config.configDir )
-
 }

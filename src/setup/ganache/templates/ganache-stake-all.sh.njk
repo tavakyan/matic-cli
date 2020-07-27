@@ -1,3 +1,4 @@
+
 #!/usr/bin/env sh
 
 set -x #echo on
@@ -13,7 +14,6 @@ ADDRESSES=({% for s in obj.signerDumpData %}
 PUB_KEYS=({% for s in obj.signerDumpData %}
   "{{ s.pub_key }}"{% endfor %}
 )
-
 
 for i in {0..{{ obj.totalNodes - 1 }}}
 do
@@ -40,4 +40,5 @@ do
   npm run truffle exec scripts/stake.js -- --network development $ADDRESS $PUB_KEY $STAKE $FEE
 
 done
+
 
