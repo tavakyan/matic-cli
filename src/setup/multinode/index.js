@@ -306,20 +306,21 @@ export class Multinode {
           }
         },
         ...createTestnetTasks,
-        {
-          title: 'Process ganache templates',
-          task: async () => {
-            const templateDir = path.resolve(
-              new URL(import.meta.url).pathname,
-              '../../ganache/templates'
-            );                        
-            // copy all templates to target directory
-            await fs.copy(templateDir, this.config.targetDirectory)
+          {
+            title: 'Process ganache templates',
+            task: async () => {
+              console.log("obj", this)     
+              const templateDir = path.resolve(
+                new URL(import.meta.url).pathname,
+                '../../ganache/templates'
+              );                        
+              // copy all templates to target directory
+              await fs.copy(templateDir, this.config.targetDirectory)
 
-            // process all njk templates
-            await processTemplateFiles(this.config.targetDirectory, { obj: this })            
-          }
-        },
+              // process all njk templates
+              await processTemplateFiles(this.config.targetDirectory, { obj: this })            
+            }
+          },
         {
           title: genesis.taskTitle,
           task: () => {
