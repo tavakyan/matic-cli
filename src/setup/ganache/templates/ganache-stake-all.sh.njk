@@ -1,0 +1,43 @@
+#!/usr/bin/env sh
+
+set -x #echo on
+
+#!/usr/bin/env sh
+
+CWD=$PWD
+
+ADDRESSES=({% for s in obj.signerDumpData %}
+  "{{ s.address }}"{% endfor %}
+)
+
+PUB_KEYS=({% for s in obj.signerDumpData %}
+  "{{ s.pub_key }}"{% endfor %}
+)
+
+
+for i in {0..{{ obj.totalNodes - 1 }}}
+do
+
+  # address
+  ADDRESS=${ADDRESSES[$i]};
+
+  # public key  
+  PUB_KEY=${PUB_KEYS[$i]};
+
+  echo $ADDRESS
+  echo $PUB_KEY
+
+  # stake
+  STAKE={{ obj.config.defaultStake }}
+
+  # fee
+  FEE={{ obj.config.defaultFee }}
+
+  # cd matic contracts
+  cd {{ obj.contracts.repositoryDir }}
+
+  # root contracts are deployed on base chain
+  npm run truffle exec scripts/stake.js -- --network development $ADDRESS $PUB_KEY $STAKE $FEE
+
+done
+
