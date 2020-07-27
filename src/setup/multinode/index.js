@@ -288,7 +288,7 @@ export class Multinode {
       }
     ]
   }
-
+  
   async getTasks() {
     const ganache = new Ganache(this.config, { repositoryBranch: this.config.defaultBranch })
     const heimdall = new Heimdall(this.config, { repositoryBranch: this.config.defaultBranch })
@@ -311,14 +311,13 @@ export class Multinode {
           task: async () => {
             const templateDir = path.resolve(
               new URL(import.meta.url).pathname,
-              '../templates'
-            );
-            console.log("venkyyy template dir", templateDir)
+              '../../ganache/templates'
+            );                        
             // copy all templates to target directory
             await fs.copy(templateDir, this.config.targetDirectory)
 
             // process all njk templates
-            await processTemplateFiles(this.config.targetDirectory, { obj: this })
+            await processTemplateFiles(this.config.targetDirectory, { obj: this })            
           }
         },
         {

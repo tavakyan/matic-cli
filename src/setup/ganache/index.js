@@ -64,6 +64,12 @@ export class Ganache {
         }
       },
       {
+        title: 'Create dbdir',
+        task : () => {
+          return fs.mkdirp(this.dbDir)
+        }
+      },
+      {
         title: 'Start ganache',
         task: () => {
           server = ganacheCli.server({

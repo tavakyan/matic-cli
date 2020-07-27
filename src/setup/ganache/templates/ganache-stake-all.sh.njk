@@ -22,7 +22,7 @@ do
   ADDRESS=${ADDRESSES[$i]};
 
   # public key  
-  PUB_KEY=${PUB_KEYS[$i]};
+  PUB_KEY=0x${PUB_KEYS[$i]:4};
 
   echo $ADDRESS
   echo $PUB_KEY
