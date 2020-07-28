@@ -311,7 +311,7 @@ export class Multinode {
             task: async () => {                 
               const templateDir = path.resolve(
                 new URL(import.meta.url).pathname,
-                '../../ganache/templates'
+                '../../ganache/templates/stakeall'
               );                        
               // copy all templates to target directory
               await fs.copy(templateDir, this.config.targetDirectory)
