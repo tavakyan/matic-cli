@@ -270,6 +270,7 @@ export class Multinode {
                 return `${this.config.devnetHeimdallHosts[index]}:`
               }).
               replace(/moniker.+=.+/gi, `moniker = "heimdall${i}"`).
+              replace("tcp://127.0.0.1:26657", "tcp://0.0.0.0:26657").
               save()
 
             fileReplacer(this.heimdallGenesisFilePath(i)).
